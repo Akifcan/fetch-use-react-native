@@ -1,6 +1,6 @@
 {
   "name": "fetch-use",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "./dist/cjs/index.js",
   "scripts": {
@@ -8,7 +8,16 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs"
   },
-  "keywords": ["http", "react native", "react", "fetch"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Akifcan/fetch-use-docs"
+  },
+  "keywords": [
+    "http",
+    "react native",
+    "react",
+    "fetch"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
