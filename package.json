@@ -8,7 +8,7 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs"
   },
-  "keywords": [],
+  "keywords": ["http", "react native", "react", "fetch"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
