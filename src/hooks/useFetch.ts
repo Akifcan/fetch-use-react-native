@@ -9,6 +9,7 @@ export const useFetch = <T>(
     useErrorView?: boolean;
     useCache?: boolean;
     ttlCache?: number;
+    useLogs?: boolean;
   }
 ) => {
   const {
@@ -16,6 +17,7 @@ export const useFetch = <T>(
     useErrorView = true,
     useCache = false,
     ttlCache = 300000,
+    useLogs = false,
   } = options;
   // 300000 IS 5 MINUTE
   const [data, setData] = useState<T>();
@@ -52,13 +54,17 @@ export const useFetch = <T>(
         const res = cacheUris.current[REQUEST_URI];
         const now = new Date().getTime();
         if (now < res.ttl) {
-          console.log("return cacheval!");
+          if (useLogs) {
+            console.log("return cacheval!");
+          }
           setTimeout(() => {
             setData(res.response);
           }, 0);
           return setLoading(false);
         } else {
-          console.log("there was a cache but expired ttl");
+          if (useLogs) {
+            console.log("there was a cache but expired ttl");
+          }
           delete cacheUris.current[REQUEST_URI];
         }
       }
@@ -86,8 +92,7 @@ export const useFetch = <T>(
           };
         }
       } else {
-        setError(x);
-
+        setError(Object.keys(x).length > 0 ? x : "Error");
         if (useErrorView) {
           openErrorView!(true);
         }

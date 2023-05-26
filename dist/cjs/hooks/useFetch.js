@@ -46,17 +46,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useFetch = void 0;
 var react_1 = require("react");
 var FetchContext_1 = require("../context/FetchContext");
 var useFetch = function (uri, method, options) {
-    var _a = options.headers, headers = _a === void 0 ? {} : _a, _b = options.useErrorView, useErrorView = _b === void 0 ? true : _b, _c = options.useCache, useCache = _c === void 0 ? false : _c, _d = options.ttlCache, ttlCache = _d === void 0 ? 300000 : _d;
+    var _a = options.headers, headers = _a === void 0 ? {} : _a, _b = options.useErrorView, useErrorView = _b === void 0 ? true : _b, _c = options.useCache, useCache = _c === void 0 ? false : _c, _d = options.ttlCache, ttlCache = _d === void 0 ? 300000 : _d, _e = options.useLogs, useLogs = _e === void 0 ? false : _e;
     // 300000 IS 5 MINUTE
-    var _e = (0, react_1.useState)(), data = _e[0], setData = _e[1];
-    var _f = (0, react_1.useState)(), error = _f[0], setError = _f[1];
-    var _g = (0, react_1.useState)(false), isLoading = _g[0], setLoading = _g[1];
-    var _h = (0, FetchContext_1.useFetchWrapper)(), openErrorView = _h.setError, API_URL = _h.baseUrl, cacheUris = _h.cacheUris;
+    var _f = (0, react_1.useState)(), data = _f[0], setData = _f[1];
+    var _g = (0, react_1.useState)(), error = _g[0], setError = _g[1];
+    var _h = (0, react_1.useState)(false), isLoading = _h[0], setLoading = _h[1];
+    var _j = (0, FetchContext_1.useFetchWrapper)(), openErrorView = _j.setError, API_URL = _j.baseUrl, cacheUris = _j.cacheUris;
     var sendRequest = function (props) { return __awaiter(void 0, void 0, void 0, function () {
         var contentType, args, REQUEST_URI, res_1, now, response, x, e_1;
         var _a;
@@ -74,7 +74,7 @@ var useFetch = function (uri, method, options) {
                     setLoading(true);
                     args = {
                         method: method,
-                        headers: __assign({ "content-type": contentType }, headers),
+                        headers: __assign({ "content-type": contentType }, headers)
                     };
                     setData(undefined);
                     REQUEST_URI = "".concat(API_URL).concat(uri);
@@ -82,14 +82,18 @@ var useFetch = function (uri, method, options) {
                         res_1 = cacheUris.current[REQUEST_URI];
                         now = new Date().getTime();
                         if (now < res_1.ttl) {
-                            console.log("return cacheval!");
+                            if (useLogs) {
+                                console.log("return cacheval!");
+                            }
                             setTimeout(function () {
                                 setData(res_1.response);
                             }, 0);
                             return [2 /*return*/, setLoading(false)];
                         }
                         else {
-                            console.log("there was a cache but expired ttl");
+                            if (useLogs) {
+                                console.log("there was a cache but expired ttl");
+                            }
                             delete cacheUris.current[REQUEST_URI];
                         }
                     }
@@ -106,12 +110,12 @@ var useFetch = function (uri, method, options) {
                         if (useCache) {
                             cacheUris.current = __assign(__assign({}, cacheUris.current), (_a = {}, _a[REQUEST_URI] = {
                                 response: x,
-                                ttl: new Date().getTime() + ttlCache,
+                                ttl: new Date().getTime() + ttlCache
                             }, _a));
                         }
                     }
                     else {
-                        setError(x);
+                        setError(Object.keys(x).length > 0 ? x : "Error");
                         if (useErrorView) {
                             openErrorView(true);
                         }
@@ -141,7 +145,7 @@ var useFetch = function (uri, method, options) {
         data: data,
         error: error,
         isLoading: isLoading,
-        destroy: destroy,
+        destroy: destroy
     };
 };
 exports.useFetch = useFetch;

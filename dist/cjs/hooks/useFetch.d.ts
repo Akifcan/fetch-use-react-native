@@ -3,6 +3,7 @@ export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" |
     useErrorView?: boolean | undefined;
     useCache?: boolean | undefined;
     ttlCache?: number | undefined;
+    useLogs?: boolean | undefined;
 }) => {
     sendRequest: (props?: {
         body?: Record<string, any>;
