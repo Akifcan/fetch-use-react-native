@@ -1,3 +1,6 @@
+export declare class UseFetchConst {
+    static headers: Record<string, any>;
+}
 export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" | "PATH" | "DELETE", options: {
     headers?: Record<string, any> | undefined;
     useErrorView?: boolean | undefined;

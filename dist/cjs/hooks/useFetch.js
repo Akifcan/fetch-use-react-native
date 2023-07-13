@@ -47,9 +47,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.useFetch = void 0;
+exports.useFetch = exports.UseFetchConst = void 0;
 var react_1 = require("react");
 var FetchContext_1 = require("../context/FetchContext");
+var UseFetchConst = /** @class */ (function () {
+    function UseFetchConst() {
+    }
+    UseFetchConst.headers = {};
+    return UseFetchConst;
+}());
+exports.UseFetchConst = UseFetchConst;
 var useFetch = function (uri, method, options) {
     var _a = options.headers, headers = _a === void 0 ? {} : _a, _b = options.useErrorView, useErrorView = _b === void 0 ? true : _b, _c = options.useCache, useCache = _c === void 0 ? false : _c, _d = options.ttlCache, ttlCache = _d === void 0 ? 300000 : _d, _e = options.useLogs, useLogs = _e === void 0 ? false : _e;
     // 300000 IS 5 MINUTE
@@ -74,7 +81,7 @@ var useFetch = function (uri, method, options) {
                     setLoading(true);
                     args = {
                         method: method,
-                        headers: __assign({ "content-type": contentType }, headers)
+                        headers: __assign(__assign({ "content-type": contentType }, headers), UseFetchConst.headers)
                     };
                     setData(undefined);
                     REQUEST_URI = "".concat(API_URL).concat(uri);

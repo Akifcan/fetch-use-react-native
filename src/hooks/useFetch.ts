@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useFetchWrapper } from "../context/FetchContext";
 
+export class UseFetchConst {
+  static headers: Record<string, any> = {};
+}
+
 export const useFetch = <T>(
   uri: string,
   method: "POST" | "GET" | "PUT" | "PATH" | "DELETE",
@@ -45,6 +49,7 @@ export const useFetch = <T>(
         headers: {
           "content-type": contentType,
           ...headers,
+          ...UseFetchConst.headers,
         },
       };
 
@@ -80,6 +85,7 @@ export const useFetch = <T>(
         }
       );
       const x = await response.json();
+      console.log(response.headers);
       if (response.ok) {
         setData(x);
         if (useCache) {
