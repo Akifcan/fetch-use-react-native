@@ -111,7 +111,6 @@ var useFetch = function (uri, method, options) {
                     return [4 /*yield*/, response.json()];
                 case 3:
                     x = _c.sent();
-                    console.log(response.headers);
                     if (response.ok) {
                         setData(x);
                         if (useCache) {
