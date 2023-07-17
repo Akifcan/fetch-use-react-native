@@ -85,7 +85,6 @@ export const useFetch = <T>(
         }
       );
       const x = await response.json();
-      console.log(response.headers);
       if (response.ok) {
         setData(x);
         if (useCache) {
