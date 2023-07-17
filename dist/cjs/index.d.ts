@@ -1,3 +1,3 @@
 import { FetchProvider } from "./provider/FetchProvider";
-import { useFetch } from "./hooks/useFetch";
-export { FetchProvider, useFetch };
+import { useFetch, UseFetchConst } from "./hooks/useFetch";
+export { FetchProvider, useFetch, UseFetchConst };
