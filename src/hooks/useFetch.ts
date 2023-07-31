@@ -7,7 +7,7 @@ export class UseFetchConst {
 
 export const useFetch = <T>(
   uri: string,
-  method: "POST" | "GET" | "PUT" | "PATH" | "DELETE",
+  method: "POST" | "GET" | "PUT" | "PATCH" | "DELETE",
   options: {
     headers?: Record<string, any>;
     useErrorView?: boolean;
