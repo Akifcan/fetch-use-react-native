@@ -4,7 +4,6 @@ export declare class UseFetchConst {
 export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" | "PATCH" | "DELETE", options: {
     headers?: Record<string, any> | undefined;
     useErrorView?: boolean | undefined;
-    globalError?: ((errorData: any) => void) | undefined;
     useCache?: boolean | undefined;
     ttlCache?: number | undefined;
     useLogs?: boolean | undefined;

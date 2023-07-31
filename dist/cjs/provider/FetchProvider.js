@@ -27,10 +27,10 @@ exports.FetchProvider = void 0;
 var react_1 = __importStar(require("react"));
 var FetchContext_1 = require("../context/FetchContext");
 var FetchProvider = function (_a) {
-    var children = _a.children, baseUrl = _a.baseUrl, errorView = _a.errorView;
+    var children = _a.children, baseUrl = _a.baseUrl, errorView = _a.errorView, globalError = _a.globalError;
     var _b = (0, react_1.useState)(false), isError = _b[0], setError = _b[1];
     var cacheUris = (0, react_1.useRef)({});
-    return (react_1.default.createElement(FetchContext_1.FetchContext.Provider, { value: { isError: isError, setError: setError, baseUrl: baseUrl, cacheUris: cacheUris } }, !isError ? children : errorView));
+    return (react_1.default.createElement(FetchContext_1.FetchContext.Provider, { value: { isError: isError, setError: setError, baseUrl: baseUrl, cacheUris: cacheUris, globalError: globalError } }, !isError ? children : errorView));
 };
 exports.FetchProvider = FetchProvider;
 //# sourceMappingURL=FetchProvider.js.map

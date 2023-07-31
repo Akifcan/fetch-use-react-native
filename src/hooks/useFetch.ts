@@ -11,7 +11,6 @@ export const useFetch = <T>(
   options: {
     headers?: Record<string, any>;
     useErrorView?: boolean;
-    globalError?: (errorData: any) => void;
     useCache?: boolean;
     ttlCache?: number;
     useLogs?: boolean;
@@ -32,6 +31,7 @@ export const useFetch = <T>(
     setError: openErrorView,
     baseUrl: API_URL,
     cacheUris,
+    globalError,
   } = useFetchWrapper();
 
   const sendRequest = async (props?: {
@@ -99,8 +99,8 @@ export const useFetch = <T>(
         }
       } else {
         setError(Object.keys(x).length > 0 ? x : "Error");
-        if (options.globalError) {
-          options.globalError(x);
+        if (globalError) {
+          globalError(x);
         }
         if (useErrorView) {
           openErrorView!(true);
@@ -109,8 +109,8 @@ export const useFetch = <T>(
       setLoading(false);
     } catch (e: any) {
       setError(e);
-      if (options.globalError) {
-        options.globalError(e);
+      if (globalError) {
+        globalError(e);
       }
       if (useErrorView) {
         openErrorView!(true);

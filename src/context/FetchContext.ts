@@ -4,6 +4,7 @@ export type FetchContextType = {
   baseUrl: string;
   isError: boolean;
   cacheUris: Record<string, any>;
+  globalError?: (errorData: any) => void;
   setError: (isError: boolean) => void;
 };
 export const FetchContext = createContext<FetchContextType>({

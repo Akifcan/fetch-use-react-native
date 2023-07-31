@@ -62,7 +62,7 @@ var useFetch = function (uri, method, options) {
     var _f = (0, react_1.useState)(), data = _f[0], setData = _f[1];
     var _g = (0, react_1.useState)(), error = _g[0], setError = _g[1];
     var _h = (0, react_1.useState)(false), isLoading = _h[0], setLoading = _h[1];
-    var _j = (0, FetchContext_1.useFetchWrapper)(), openErrorView = _j.setError, API_URL = _j.baseUrl, cacheUris = _j.cacheUris;
+    var _j = (0, FetchContext_1.useFetchWrapper)(), openErrorView = _j.setError, API_URL = _j.baseUrl, cacheUris = _j.cacheUris, globalError = _j.globalError;
     var sendRequest = function (props) { return __awaiter(void 0, void 0, void 0, function () {
         var contentType, args, REQUEST_URI, res_1, now, response, x, e_1;
         var _a;
@@ -122,8 +122,8 @@ var useFetch = function (uri, method, options) {
                     }
                     else {
                         setError(Object.keys(x).length > 0 ? x : "Error");
-                        if (options.globalError) {
-                            options.globalError(x);
+                        if (globalError) {
+                            globalError(x);
                         }
                         if (useErrorView) {
                             openErrorView(true);
@@ -134,8 +134,8 @@ var useFetch = function (uri, method, options) {
                 case 4:
                     e_1 = _c.sent();
                     setError(e_1);
-                    if (options.globalError) {
-                        options.globalError(e_1);
+                    if (globalError) {
+                        globalError(e_1);
                     }
                     if (useErrorView) {
                         openErrorView(true);
