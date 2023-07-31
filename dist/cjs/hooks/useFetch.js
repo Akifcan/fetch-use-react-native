@@ -122,6 +122,9 @@ var useFetch = function (uri, method, options) {
                     }
                     else {
                         setError(Object.keys(x).length > 0 ? x : "Error");
+                        if (options.globalError) {
+                            options.globalError(x);
+                        }
                         if (useErrorView) {
                             openErrorView(true);
                         }
@@ -131,6 +134,9 @@ var useFetch = function (uri, method, options) {
                 case 4:
                     e_1 = _c.sent();
                     setError(e_1);
+                    if (options.globalError) {
+                        options.globalError(e_1);
+                    }
                     if (useErrorView) {
                         openErrorView(true);
                     }
