@@ -20,5 +20,4 @@ export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" |
     } | undefined;
     isLoading: boolean;
     destroy: () => void;
-    restartApp: () => void;
 };
