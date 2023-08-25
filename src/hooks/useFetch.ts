@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useFetchWrapper } from "../context/FetchContext";
-import RNRestart from 'react-native-restart'
 export class UseFetchConst {
   static headers: Record<string, any> = {};
 }
@@ -34,9 +33,6 @@ export const useFetch = <T>(
     globalError,
   } = useFetchWrapper();
 
-  const restartApp = () => {
-    RNRestart.restart()
-  }
 
   const sendRequest = async (props?: {
     body?: Record<string, any>;
@@ -127,16 +123,13 @@ export const useFetch = <T>(
   const destroy = () => {
     setData(undefined);
     setError(undefined);
-    openErrorView(false)
   };
 
   return {
-    setErrorViewVisibility: openErrorView,
     sendRequest,
     data,
     error,
     isLoading,
     destroy,
-    restartApp
   };
 };

@@ -46,10 +46,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useFetch = exports.UseFetchConst = void 0;
 var react_1 = require("react");
 var FetchContext_1 = require("../context/FetchContext");
+var react_native_restart_1 = __importDefault(require("react-native-restart"));
 var UseFetchConst = exports.UseFetchConst = /** @class */ (function () {
     function UseFetchConst() {
     }
@@ -63,6 +67,9 @@ var useFetch = function (uri, method, options) {
     var _g = (0, react_1.useState)(), error = _g[0], setError = _g[1];
     var _h = (0, react_1.useState)(false), isLoading = _h[0], setLoading = _h[1];
     var _j = (0, FetchContext_1.useFetchWrapper)(), openErrorView = _j.setError, API_URL = _j.baseUrl, cacheUris = _j.cacheUris, globalError = _j.globalError;
+    var restartApp = function () {
+        react_native_restart_1.default.restart();
+    };
     var sendRequest = function (props) { return __awaiter(void 0, void 0, void 0, function () {
         var contentType, args, REQUEST_URI, res_1, now, response, x, e_1;
         var _a;
@@ -121,9 +128,9 @@ var useFetch = function (uri, method, options) {
                         }
                     }
                     else {
-                        setError(Object.keys(x).length > 0 ? x : "Error");
+                        setError({ response: response, message: Object.keys(x).length > 0 ? x : "Error" });
                         if (globalError) {
-                            globalError(x);
+                            globalError({ response: response, x: x });
                         }
                         if (useErrorView) {
                             openErrorView(true);
@@ -133,9 +140,9 @@ var useFetch = function (uri, method, options) {
                     return [3 /*break*/, 6];
                 case 4:
                     e_1 = _c.sent();
-                    setError(e_1);
+                    setError({ message: e_1 });
                     if (globalError) {
-                        globalError(e_1);
+                        globalError({ error: e_1 });
                     }
                     if (useErrorView) {
                         openErrorView(true);
@@ -158,6 +165,7 @@ var useFetch = function (uri, method, options) {
         error: error,
         isLoading: isLoading,
         destroy: destroy,
+        restartApp: restartApp
     };
 };
 exports.useFetch = useFetch;

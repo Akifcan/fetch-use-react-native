@@ -7,6 +7,7 @@ exports.FetchContext = (0, react_1.createContext)({
     isError: false,
     cacheUris: {},
     setError: function () { return console.error("no error provider"); },
+    restartApp: function () { return console.error("no error provider"); },
 });
 var useFetchWrapper = function () { return (0, react_1.useContext)(exports.FetchContext); };
 exports.useFetchWrapper = useFetchWrapper;

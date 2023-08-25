@@ -1,4 +1,5 @@
 import { FetchProvider } from "./provider/FetchProvider";
 import { useFetch, UseFetchConst } from "./hooks/useFetch";
-export { FetchProvider, useFetch, UseFetchConst };
+import { useFetchWrapper } from "./context/FetchContext";
+export { FetchProvider, useFetch, UseFetchConst, useFetchWrapper };
 //# sourceMappingURL=index.js.map

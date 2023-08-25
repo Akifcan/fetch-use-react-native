@@ -18,6 +18,7 @@ export const FetchProvider: FC<FetchProviderProps> = ({
 
   const cacheUris = useRef({});
 
+
   return (
     <FetchContext.Provider
       value={{ isError, setError, baseUrl, cacheUris: cacheUris, globalError }}

@@ -14,7 +14,11 @@ export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" |
         contentType?: "application/json" | "multipart/form-data";
     }) => Promise<void>;
     data: T | undefined;
-    error: string | undefined;
+    error: {
+        message: string;
+        response?: any;
+    } | undefined;
     isLoading: boolean;
     destroy: () => void;
+    restartApp: () => void;
 };

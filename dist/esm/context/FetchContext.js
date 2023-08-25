@@ -4,6 +4,7 @@ export var FetchContext = createContext({
     isError: false,
     cacheUris: {},
     setError: function () { return console.error("no error provider"); },
+    restartApp: function () { return console.error("no error provider"); },
 });
 export var useFetchWrapper = function () { return useContext(FetchContext); };
 //# sourceMappingURL=FetchContext.js.map
