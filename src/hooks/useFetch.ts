@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFetchWrapper } from "../context/FetchContext";
-
+import RNRestart from 'react-native-restart'
 export class UseFetchConst {
   static headers: Record<string, any> = {};
 }
@@ -25,7 +25,7 @@ export const useFetch = <T>(
   } = options;
   // 300000 IS 5 MINUTE
   const [data, setData] = useState<T>();
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<{message: string, response?: any}>();
   const [isLoading, setLoading] = useState(false);
   const {
     setError: openErrorView,
@@ -33,6 +33,10 @@ export const useFetch = <T>(
     cacheUris,
     globalError,
   } = useFetchWrapper();
+
+  const restartApp = () => {
+    RNRestart.restart()
+  }
 
   const sendRequest = async (props?: {
     body?: Record<string, any>;
@@ -98,9 +102,9 @@ export const useFetch = <T>(
           };
         }
       } else {
-        setError(Object.keys(x).length > 0 ? x : "Error");
+        setError({response: response, message: Object.keys(x).length > 0 ? x : "Error"});
         if (globalError) {
-          globalError(x);
+          globalError({response: response, x});
         }
         if (useErrorView) {
           openErrorView!(true);
@@ -108,9 +112,9 @@ export const useFetch = <T>(
       }
       setLoading(false);
     } catch (e: any) {
-      setError(e);
+      setError({message: e});
       if (globalError) {
-        globalError(e);
+        globalError({error: e});
       }
       if (useErrorView) {
         openErrorView!(true);
@@ -123,13 +127,16 @@ export const useFetch = <T>(
   const destroy = () => {
     setData(undefined);
     setError(undefined);
+    openErrorView(false)
   };
 
   return {
+    setErrorViewVisibility: openErrorView,
     sendRequest,
     data,
     error,
     isLoading,
     destroy,
+    restartApp
   };
 };
