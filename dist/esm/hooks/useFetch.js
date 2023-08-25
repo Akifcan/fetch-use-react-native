@@ -120,7 +120,7 @@ export var useFetch = function (uri, method, options) {
                     else {
                         setError({ response: response, message: Object.keys(x).length > 0 ? x : "Error" });
                         if (globalError) {
-                            globalError({ response: response, x: x });
+                            globalError({ message: Object.keys(x).length > 0 ? x : "Error", response: response });
                         }
                         if (useErrorView) {
                             openErrorView(true);
@@ -132,7 +132,7 @@ export var useFetch = function (uri, method, options) {
                     e_1 = _c.sent();
                     setError({ message: e_1 });
                     if (globalError) {
-                        globalError({ error: e_1 });
+                        globalError({ message: e_1, response: { name: e_1.name, type: e_1.type, code: e_1.code } });
                     }
                     if (useErrorView) {
                         openErrorView(true);

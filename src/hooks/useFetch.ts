@@ -100,7 +100,7 @@ export const useFetch = <T>(
       } else {
         setError({response: response, message: Object.keys(x).length > 0 ? x : "Error"});
         if (globalError) {
-          globalError({response: response, x});
+          globalError({message: Object.keys(x).length > 0 ? x : "Error", response});
         }
         if (useErrorView) {
           openErrorView!(true);
@@ -110,7 +110,7 @@ export const useFetch = <T>(
     } catch (e: any) {
       setError({message: e});
       if (globalError) {
-        globalError({error: e});
+        globalError({message: e, response: {name: e.name, type: e.type, code: e.code}});
       }
       if (useErrorView) {
         openErrorView!(true);

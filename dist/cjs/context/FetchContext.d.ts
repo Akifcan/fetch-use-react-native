@@ -3,7 +3,10 @@ export type FetchContextType = {
     baseUrl: string;
     isError: boolean;
     cacheUris: Record<string, any>;
-    globalError?: (errorData: any) => void;
+    globalError?: (opt: {
+        message: string;
+        response?: any;
+    }) => void;
     setError: (isError: boolean) => void;
 };
 export declare const FetchContext: import("react").Context<FetchContextType>;

@@ -4,7 +4,7 @@ import { FetchContext } from "../context/FetchContext";
 interface FetchProviderProps {
   children: ReactNode;
   errorView: ReactNode;
-  globalError?: (errorData: any) => void;
+  globalError?: (opt: {message: string, response?: any}) => void;
   baseUrl: string;
 }
 
