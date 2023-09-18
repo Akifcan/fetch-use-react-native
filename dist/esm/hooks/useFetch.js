@@ -45,7 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useFetchWrapper } from "../context/FetchContext";
 export var UseFetchConst = /** @class */ (function () {
     function UseFetchConst() {
@@ -55,24 +55,25 @@ export var UseFetchConst = /** @class */ (function () {
 }());
 export var useFetch = function (uri, method, options) {
     var _a = options.headers, headers = _a === void 0 ? {} : _a, _b = options.useErrorView, useErrorView = _b === void 0 ? true : _b, _c = options.useCache, useCache = _c === void 0 ? false : _c, _d = options.ttlCache, ttlCache = _d === void 0 ? 300000 : _d, _e = options.useLogs, useLogs = _e === void 0 ? false : _e;
+    var controller = useRef(new AbortController());
     // 300000 IS 5 MINUTE
     var _f = useState(), data = _f[0], setData = _f[1];
     var _g = useState(), error = _g[0], setError = _g[1];
     var _h = useState(false), isLoading = _h[0], setLoading = _h[1];
     var _j = useFetchWrapper(), openErrorView = _j.setError, API_URL = _j.baseUrl, cacheUris = _j.cacheUris, globalError = _j.globalError;
     var sendRequest = function (props) { return __awaiter(void 0, void 0, void 0, function () {
-        var contentType, args, REQUEST_URI, res_1, now, response, x, e_1;
+        var contentType, args, REQUEST_URI, res_1, now, signal, response, x, e_1;
         var _a;
-        var _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var _b, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     if (method === "GET" && (props === null || props === void 0 ? void 0 : props.body) !== undefined) {
                         throw new Error("you should remove body if request is get");
                     }
-                    _c.label = 1;
+                    _d.label = 1;
                 case 1:
-                    _c.trys.push([1, 4, 5, 6]);
+                    _d.trys.push([1, 4, 5, 6]);
                     contentType = (_b = props === null || props === void 0 ? void 0 : props.contentType) !== null && _b !== void 0 ? _b : "application/json";
                     setLoading(true);
                     args = {
@@ -86,7 +87,7 @@ export var useFetch = function (uri, method, options) {
                         now = new Date().getTime();
                         if (now < res_1.ttl) {
                             if (useLogs) {
-                                console.log("return cacheval!");
+                                console.log("\x1b[33m fetch-use: return cacheval!\x1b[0m");
                             }
                             setTimeout(function () {
                                 setData(res_1.response);
@@ -95,19 +96,32 @@ export var useFetch = function (uri, method, options) {
                         }
                         else {
                             if (useLogs) {
-                                console.log("there was a cache but expired ttl");
+                                console.log("\x1b[33m fetch-use: there was a cache but expired ttl \x1b[0m");
                             }
                             delete cacheUris.current[REQUEST_URI];
                         }
                     }
+                    signal = controller.current.signal;
+                    if (props === null || props === void 0 ? void 0 : props.timeoutTtl) {
+                        setTimeout(function () {
+                            var _a, _b;
+                            if ((_a = props.timeoutTtl) === null || _a === void 0 ? void 0 : _a.onExpired) {
+                                (_b = props.timeoutTtl) === null || _b === void 0 ? void 0 : _b.onExpired();
+                            }
+                            if (useLogs) {
+                                console.log("\x1b[33m fetch-use: this request is aborted \x1b[0m");
+                            }
+                            controller.current.abort();
+                        }, ((_c = props.timeoutTtl) === null || _c === void 0 ? void 0 : _c.duration) || 30000);
+                    }
                     return [4 /*yield*/, fetch("".concat(REQUEST_URI, "?") + new URLSearchParams(props === null || props === void 0 ? void 0 : props.params), __assign(__assign({}, args), { body: contentType === "application/json"
                                 ? JSON.stringify(props === null || props === void 0 ? void 0 : props.body)
-                                : props === null || props === void 0 ? void 0 : props.body }))];
+                                : props === null || props === void 0 ? void 0 : props.body, signal: signal }))];
                 case 2:
-                    response = _c.sent();
+                    response = _d.sent();
                     return [4 /*yield*/, response.json()];
                 case 3:
-                    x = _c.sent();
+                    x = _d.sent();
                     if (response.ok) {
                         setData(x);
                         if (useCache) {
@@ -118,9 +132,15 @@ export var useFetch = function (uri, method, options) {
                         }
                     }
                     else {
-                        setError({ response: response, message: Object.keys(x).length > 0 ? x : "Error" });
+                        setError({
+                            response: response,
+                            message: Object.keys(x).length > 0 ? x : "Error",
+                        });
                         if (globalError) {
-                            globalError({ message: Object.keys(x).length > 0 ? x : "Error", response: response });
+                            globalError({
+                                message: Object.keys(x).length > 0 ? x : "Error",
+                                response: response,
+                            });
                         }
                         if (useErrorView) {
                             openErrorView(true);
@@ -129,10 +149,13 @@ export var useFetch = function (uri, method, options) {
                     setLoading(false);
                     return [3 /*break*/, 6];
                 case 4:
-                    e_1 = _c.sent();
+                    e_1 = _d.sent();
                     setError({ message: e_1 });
                     if (globalError) {
-                        globalError({ message: e_1, response: { name: e_1.name, type: e_1.type, code: e_1.code } });
+                        globalError({
+                            message: e_1,
+                            response: { name: e_1.name, type: e_1.type, code: e_1.code },
+                        });
                     }
                     if (useErrorView) {
                         openErrorView(true);
@@ -155,6 +178,7 @@ export var useFetch = function (uri, method, options) {
         error: error,
         isLoading: isLoading,
         destroy: destroy,
+        abortController: controller,
     };
 };
 //# sourceMappingURL=useFetch.js.map

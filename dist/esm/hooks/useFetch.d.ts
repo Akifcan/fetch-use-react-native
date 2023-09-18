@@ -1,3 +1,4 @@
+/// <reference types="react" />
 export declare class UseFetchConst {
     static headers: Record<string, any>;
 }
@@ -12,6 +13,10 @@ export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" |
         body?: Record<string, any>;
         params?: Record<string, any>;
         contentType?: "application/json" | "multipart/form-data";
+        timeoutTtl?: {
+            duration?: number;
+            onExpired?: () => void;
+        };
     }) => Promise<void>;
     data: T | undefined;
     error: {
@@ -20,4 +25,5 @@ export declare const useFetch: <T>(uri: string, method: "POST" | "GET" | "PUT" |
     } | undefined;
     isLoading: boolean;
     destroy: () => void;
+    abortController: import("react").MutableRefObject<AbortController>;
 };

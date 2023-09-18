@@ -26,6 +26,13 @@ csstype@^3.0.2:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.2.tgz"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
 
+fetch-use@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/fetch-use/-/fetch-use-6.0.0.tgz#8d1a86a6967f6d70aa5880a6334228b7e98b18e0"
+  integrity sha512-jAnRWPxpxnMOwJ0Pjox9XpuaQ3vz07OJiTMBkSdSKBWVwgr69K/To4cgzSmyGbeY+mfSOcs5gNlGipz6nZ4sGw==
+  dependencies:
+    react-native-restart "^0.0.27"
+
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
