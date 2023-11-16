@@ -1,6 +1,6 @@
 {
   "name": "fetch-use",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "",
   "main": "./dist/cjs/index.js",
   "scripts": {
