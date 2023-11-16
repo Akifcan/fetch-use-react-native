@@ -134,10 +134,10 @@ export const useFetch = <T>(
       }
       setLoading(false);
     } catch (e: any) {
-      setError({ message: e ? e.toString() : 'unexcepted_error' });
+      setError({ message: e?.name ? e.name : 'unexcepted_error' });
       if (globalError) {
         globalError({
-          message: e ? e.toString() : 'unexcepted_error',
+          message: e?.name ? e.name : 'unexcepted_error',
           response: { name: e.name, type: e.type, code: e.code },
         });
       }

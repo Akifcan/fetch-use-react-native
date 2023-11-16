@@ -153,10 +153,10 @@ var useFetch = function (uri, method, options) {
                     return [3 /*break*/, 6];
                 case 4:
                     e_1 = _d.sent();
-                    setError({ message: e_1 ? e_1.toString() : 'unexcepted_error' });
+                    setError({ message: (e_1 === null || e_1 === void 0 ? void 0 : e_1.name) ? e_1.name : 'unexcepted_error' });
                     if (globalError) {
                         globalError({
-                            message: e_1 ? e_1.toString() : 'unexcepted_error',
+                            message: (e_1 === null || e_1 === void 0 ? void 0 : e_1.name) ? e_1.name : 'unexcepted_error',
                             response: { name: e_1.name, type: e_1.type, code: e_1.code },
                         });
                     }
