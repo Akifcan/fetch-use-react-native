@@ -91,6 +91,7 @@ export const useFetch = <T>(
             console.log("\x1b[33m fetch-use: this request is aborted \x1b[0m");
           }
           controller.current.abort();
+          controller.current = new AbortController()
         }, props.timeoutTtl?.duration || 30000);
       }
 

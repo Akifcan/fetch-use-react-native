@@ -112,6 +112,7 @@ export var useFetch = function (uri, method, options) {
                                 console.log("\x1b[33m fetch-use: this request is aborted \x1b[0m");
                             }
                             controller.current.abort();
+                            controller.current = new AbortController();
                         }, ((_c = props.timeoutTtl) === null || _c === void 0 ? void 0 : _c.duration) || 30000);
                     }
                     return [4 /*yield*/, fetch("".concat(REQUEST_URI, "?") + new URLSearchParams(props === null || props === void 0 ? void 0 : props.params), __assign(__assign({}, args), { body: contentType === "application/json"
