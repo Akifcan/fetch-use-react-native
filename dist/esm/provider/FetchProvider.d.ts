@@ -5,6 +5,7 @@ interface FetchProviderProps {
     globalError?: (opt: {
         message: string;
         response?: any;
+        endpoint?: string;
     }) => void;
     baseUrl: string;
 }

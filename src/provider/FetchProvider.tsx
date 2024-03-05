@@ -4,7 +4,11 @@ import { FetchContext } from "../context/FetchContext";
 interface FetchProviderProps {
   children: ReactNode;
   errorView: ReactNode;
-  globalError?: (opt: {message: string, response?: any}) => void;
+  globalError?: (opt: {
+    message: string;
+    response?: any;
+    endpoint?: string;
+  }) => void;
   baseUrl: string;
 }
 
@@ -17,7 +21,6 @@ export const FetchProvider: FC<FetchProviderProps> = ({
   const [isError, setError] = useState(false);
 
   const cacheUris = useRef({});
-
 
   return (
     <FetchContext.Provider

@@ -46,6 +46,7 @@ export const useFetch = <T>(
     if (method === "GET" && props?.body !== undefined) {
       throw new Error("you should remove body if request is get");
     }
+    const REQUEST_URI = `${API_URL}${uri}`;
     try {
       const contentType = props?.contentType ?? "application/json";
       setLoading(true);
@@ -59,7 +60,6 @@ export const useFetch = <T>(
       };
 
       setData(undefined);
-      const REQUEST_URI = `${API_URL}${uri}`;
       if (useCache === true && cacheUris.current[REQUEST_URI]) {
         const res = cacheUris.current[REQUEST_URI];
         const now = new Date().getTime();
@@ -91,7 +91,7 @@ export const useFetch = <T>(
             console.log("\x1b[33m fetch-use: this request is aborted \x1b[0m");
           }
           controller.current.abort();
-          controller.current = new AbortController()
+          controller.current = new AbortController();
         }, props.timeoutTtl?.duration || 30000);
       }
 
@@ -127,6 +127,7 @@ export const useFetch = <T>(
           globalError({
             message: Object.keys(x).length > 0 ? x : "Error",
             response,
+            endpoint: REQUEST_URI,
           });
         }
         if (useErrorView) {
@@ -135,11 +136,12 @@ export const useFetch = <T>(
       }
       setLoading(false);
     } catch (e: any) {
-      setError({ message: e?.name ? e.name : 'unexcepted_error' });
+      setError({ message: e?.name ? e.name : "unexcepted_error" });
       if (globalError) {
         globalError({
-          message: e?.name ? e.name : 'unexcepted_error',
+          message: e?.name ? e.name : "unexcepted_error",
           response: { name: e.name, type: e.type, code: e.code },
+          endpoint: REQUEST_URI,
         });
       }
       if (useErrorView) {

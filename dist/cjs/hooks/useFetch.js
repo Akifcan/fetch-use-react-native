@@ -65,7 +65,7 @@ var useFetch = function (uri, method, options) {
     var _h = (0, react_1.useState)(false), isLoading = _h[0], setLoading = _h[1];
     var _j = (0, FetchContext_1.useFetchWrapper)(), openErrorView = _j.setError, API_URL = _j.baseUrl, cacheUris = _j.cacheUris, globalError = _j.globalError;
     var sendRequest = function (props) { return __awaiter(void 0, void 0, void 0, function () {
-        var contentType, args, REQUEST_URI, res_1, now, signal, response, x, e_1;
+        var REQUEST_URI, contentType, args, res_1, now, signal, response, x, e_1;
         var _a;
         var _b, _c;
         return __generator(this, function (_d) {
@@ -74,6 +74,7 @@ var useFetch = function (uri, method, options) {
                     if (method === "GET" && (props === null || props === void 0 ? void 0 : props.body) !== undefined) {
                         throw new Error("you should remove body if request is get");
                     }
+                    REQUEST_URI = "".concat(API_URL).concat(uri);
                     _d.label = 1;
                 case 1:
                     _d.trys.push([1, 4, 5, 6]);
@@ -84,7 +85,6 @@ var useFetch = function (uri, method, options) {
                         headers: __assign(__assign({ "content-type": contentType }, headers), UseFetchConst.headers),
                     };
                     setData(undefined);
-                    REQUEST_URI = "".concat(API_URL).concat(uri);
                     if (useCache === true && cacheUris.current[REQUEST_URI]) {
                         res_1 = cacheUris.current[REQUEST_URI];
                         now = new Date().getTime();
@@ -144,6 +144,7 @@ var useFetch = function (uri, method, options) {
                             globalError({
                                 message: Object.keys(x).length > 0 ? x : "Error",
                                 response: response,
+                                endpoint: REQUEST_URI,
                             });
                         }
                         if (useErrorView) {
@@ -154,11 +155,12 @@ var useFetch = function (uri, method, options) {
                     return [3 /*break*/, 6];
                 case 4:
                     e_1 = _d.sent();
-                    setError({ message: (e_1 === null || e_1 === void 0 ? void 0 : e_1.name) ? e_1.name : 'unexcepted_error' });
+                    setError({ message: (e_1 === null || e_1 === void 0 ? void 0 : e_1.name) ? e_1.name : "unexcepted_error" });
                     if (globalError) {
                         globalError({
-                            message: (e_1 === null || e_1 === void 0 ? void 0 : e_1.name) ? e_1.name : 'unexcepted_error',
+                            message: (e_1 === null || e_1 === void 0 ? void 0 : e_1.name) ? e_1.name : "unexcepted_error",
                             response: { name: e_1.name, type: e_1.type, code: e_1.code },
+                            endpoint: REQUEST_URI,
                         });
                     }
                     if (useErrorView) {

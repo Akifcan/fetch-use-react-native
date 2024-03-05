@@ -6,6 +6,7 @@ export type FetchContextType = {
     globalError?: (opt: {
         message: string;
         response?: any;
+        endpoint?: string;
     }) => void;
     setError: (isError: boolean) => void;
 };
